@@ -1,0 +1,5 @@
+# gradlew phải giữ LF, nếu không chạy trên Linux/Colab sẽ lỗi "bad interpreter"
+gradlew text eol=lf
+*.bat text eol=crlf
+*.traineddata binary
+*.joblib binary

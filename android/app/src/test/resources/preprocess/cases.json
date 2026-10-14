@@ -1,0 +1,45 @@
+{
+ "opencv": "5.0.0",
+ "cases": [
+  {
+   "name": "bank_light_1080",
+   "width": 1080,
+   "height": 2160,
+   "final_width": 1440,
+   "final_height": 2880,
+   "scale": 1.3333333333333333
+  },
+  {
+   "name": "chat_dark_1080",
+   "width": 1080,
+   "height": 2160,
+   "final_width": 1440,
+   "final_height": 2880,
+   "scale": 1.3333333333333333
+  },
+  {
+   "name": "idcard_dark_720",
+   "width": 720,
+   "height": 1440,
+   "final_width": 1440,
+   "final_height": 2880,
+   "scale": 2.0
+  },
+  {
+   "name": "form_1080x2181",
+   "width": 1080,
+   "height": 2181,
+   "final_width": 1440,
+   "final_height": 2908,
+   "scale": 1.3333333333333333
+  },
+  {
+   "name": "crop_1077x1501",
+   "width": 1077,
+   "height": 1501,
+   "final_width": 1440,
+   "final_height": 2007,
+   "scale": 1.3370473537604457
+  }
+ ]
+}

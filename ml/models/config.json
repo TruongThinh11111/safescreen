@@ -1,0 +1,422 @@
+{
+  "format": "safescreen-config/1",
+  "reference_date": "2026-10-14",
+  "unicode": "Mọi chuỗi OCR phải chuẩn hoá NFC trước khi xử lý (xem crf_pure.py [P1]).",
+  "regex": {
+    "syntax": "java.util.regex. JVM: compile với Pattern.UNICODE_CHARACTER_CLASS (+ CASE_INSENSITIVE nếu có trong flags). Android (ICU): Unicode là mặc định, KHÔNG chèn (?U) vào pattern.",
+    "patterns": {
+      "number_run": {
+        "pattern": "(?<![^\\W\\d])[0-9OolI|]+(?![^\\W\\d])",
+        "flags": []
+      },
+      "cccd": {
+        "pattern": "(?<![\\d+])(?<!\\d[ .])\\d(?:[ .\\n]?\\d){11}(?![ .-]?\\d)",
+        "flags": []
+      },
+      "non_digit": {
+        "pattern": "\\D",
+        "flags": []
+      },
+      "date": {
+        "pattern": "(?<![\\d/.-])(\\d{1,2})\\s?([/.-])\\s?(\\d{1,2})\\s?\\2\\s?(\\d{4})(?![\\d/.-]?\\d)",
+        "flags": []
+      },
+      "phone": {
+        "pattern": "(?<![\\d+])(?<!\\d[ .])(?:\\(\\+84\\)|\\+\\s?84|84|0)[\\s.-]?[35789](?:[\\s.-]?\\d){8}(?![ .-]?\\d)",
+        "flags": []
+      },
+      "phone_canonical": {
+        "pattern": "0\\d{9}|0\\d{3}([ .-])\\d{3}\\1\\d{3}|\\+84 ?\\d{9}|(?:\\+84|\\(\\+84\\)) \\d{3} \\d{3} \\d{3}",
+        "flags": []
+      },
+      "email_tight": {
+        "pattern": "(?<![\\w.+-])[A-Za-z0-9][A-Za-z0-9._%+-]*@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}(?!\\w)",
+        "flags": []
+      },
+      "email_loose": {
+        "pattern": "(?<![\\w.+-])\\w[\\w.%+-]*\\s?[(\\[{]?@+\\s?[\\w-]+(?:\\s?\\.\\s?[\\w-]+)*\\s?\\.\\s?[A-Za-z]{2,}(?!\\w)",
+        "flags": []
+      },
+      "money": {
+        "pattern": "(?<![\\w.,+-])(?<num>(?:[+-]\\s?)?(?:\\d{1,3}(?:[.,]\\d{3})+|\\d+))(?<cur>(?:\\s?(?i:vn[dđ]|đồng|đông|dong)|\\s?[đ₫]|d)(?!\\w))?",
+        "flags": []
+      },
+      "money_prefix": {
+        "pattern": "(?<!\\w)(?i:vn[dđ])\\s?(?:[+-]\\s?)?\\d{1,3}(?:[.,]\\d{3})+(?![\\d.,]?\\d)",
+        "flags": []
+      },
+      "money_short": {
+        "pattern": "(?<![\\w.,])\\d+(?:[.,]\\d+)?\\s?(?<unit>triệu|trieu|nghìn|ngàn|nghin|ngan|tr|k)\\d?(?!\\w)",
+        "flags": [
+          "CASE_INSENSITIVE"
+        ]
+      },
+      "thousand_group": {
+        "pattern": "[.,]\\d{3}",
+        "flags": []
+      },
+      "account": {
+        "pattern": "(?<![\\w#+.,])(?<!\\d[ .])\\d{4,16}(?:\\s\\d{1,4}){0,3}(?!\\w|[.,]\\d|[ ]\\d)",
+        "flags": []
+      },
+      "digit_run": {
+        "pattern": "\\d+",
+        "flags": []
+      }
+    },
+    "rule_order": [
+      "CCCD",
+      "DOB",
+      "PHONE",
+      "EMAIL",
+      "MONEY",
+      "ACCOUNT"
+    ],
+    "tight": 1.0,
+    "loose": 0.6,
+    "window": 40,
+    "keywords": {
+      "CCCD": [
+        "cccd",
+        "cmnd",
+        "can cuoc",
+        "dinh danh",
+        "no.",
+        "citizen",
+        "identity"
+      ],
+      "DOB": [
+        "ngay sinh",
+        "sinh ngay",
+        "nam sinh",
+        "sinh nhat",
+        "date of birth",
+        "dob",
+        "birth"
+      ],
+      "PHONE": [
+        "sdt",
+        "dien thoai",
+        "phone",
+        "goi",
+        "zalo",
+        "lien he",
+        "so may"
+      ],
+      "EMAIL": [
+        "email",
+        "mail",
+        "gmail"
+      ],
+      "MONEY": [
+        "so tien",
+        "so du",
+        "phi",
+        "luong",
+        "gia",
+        "chuyen",
+        "nhan",
+        "thanh toan",
+        "tong"
+      ],
+      "ACCOUNT": [
+        "stk",
+        "tk",
+        "tai khoan",
+        "account",
+        "chuyen tien den",
+        "chuyen den",
+        "chuyen khoan vao"
+      ]
+    },
+    "dob_negative": [
+      "gia tri den",
+      "het han",
+      "ngay cap",
+      "thoi gian",
+      "giao dich",
+      "expiry",
+      "valid"
+    ],
+    "province_codes": [
+      "001",
+      "002",
+      "004",
+      "006",
+      "008",
+      "010",
+      "011",
+      "012",
+      "014",
+      "015",
+      "017",
+      "019",
+      "020",
+      "022",
+      "024",
+      "025",
+      "026",
+      "027",
+      "030",
+      "031",
+      "033",
+      "034",
+      "035",
+      "036",
+      "037",
+      "038",
+      "040",
+      "042",
+      "044",
+      "045",
+      "046",
+      "048",
+      "049",
+      "051",
+      "052",
+      "054",
+      "056",
+      "058",
+      "060",
+      "062",
+      "064",
+      "066",
+      "067",
+      "068",
+      "070",
+      "072",
+      "074",
+      "075",
+      "077",
+      "079",
+      "080",
+      "082",
+      "083",
+      "084",
+      "086",
+      "087",
+      "089",
+      "091",
+      "092",
+      "093",
+      "094",
+      "095",
+      "096"
+    ],
+    "mobile_prefixes": [
+      "032",
+      "033",
+      "034",
+      "035",
+      "036",
+      "037",
+      "038",
+      "039",
+      "052",
+      "055",
+      "056",
+      "058",
+      "059",
+      "070",
+      "076",
+      "077",
+      "078",
+      "079",
+      "081",
+      "082",
+      "083",
+      "084",
+      "085",
+      "086",
+      "087",
+      "088",
+      "089",
+      "090",
+      "091",
+      "092",
+      "093",
+      "094",
+      "096",
+      "097",
+      "098",
+      "099"
+    ],
+    "hotline_prefixes": [
+      "1800",
+      "1900"
+    ],
+    "priority": {
+      "EMAIL": 0,
+      "CCCD": 1,
+      "PHONE": 2,
+      "DOB": 3,
+      "MONEY": 4,
+      "ACCOUNT": 5
+    },
+    "digit_lookalikes": {
+      "O": "0",
+      "o": "0",
+      "l": "1",
+      "I": "1",
+      "|": "1"
+    },
+    "dashes": {
+      "–": "-",
+      "—": "-",
+      "−": "-"
+    }
+  },
+  "crf_features": {
+    "keywords": {
+      "NAME": [
+        "ho ten",
+        "ho va ten",
+        "full name",
+        "ten khach hang",
+        "nguoi nhan",
+        "chu tk",
+        "chu tai khoan",
+        "nhan tien tu",
+        "xin chao",
+        "noi dung"
+      ],
+      "DOB": [
+        "ngay sinh",
+        "date of birth",
+        "sinh nhat"
+      ],
+      "ADDRESS": [
+        "dia chi",
+        "que quan",
+        "thuong tru",
+        "noi o",
+        "place of"
+      ],
+      "ACCOUNT": [
+        "stk",
+        "so tai khoan",
+        "tai khoan"
+      ],
+      "MONEY": [
+        "so du",
+        "so tien",
+        "phi giao dich"
+      ],
+      "CCCD": [
+        "cccd",
+        "can cuoc",
+        "cmnd",
+        "no."
+      ],
+      "PHONE": [
+        "sdt",
+        "dien thoai"
+      ],
+      "EMAIL": [
+        "email",
+        "mail"
+      ]
+    },
+    "kw_window": 4,
+    "patterns": {
+      "punct_to_space": "[^\\w\\s.]",
+      "multi_space": "\\s+",
+      "repeated_char": "(.)\\1+"
+    },
+    "len_max": 15,
+    "shape_full_max": 12,
+    "neighbor_offsets": [
+      -2,
+      -1,
+      1,
+      2
+    ]
+  },
+  "risk": {
+    "features": [
+      "p_crf",
+      "r_regex",
+      "c_ocr",
+      "ctx"
+    ],
+    "lambdas": [
+      15.317817112956568,
+      1.8016937672706768,
+      -3.547669257644897,
+      -0.8661376967415373
+    ],
+    "beta": -4.7328793663975075,
+    "tau": 0.23887022985625672,
+    "ctx_window": 3,
+    "keywords": [
+      "ho ten",
+      "ho va ten",
+      "full name",
+      "ten khach hang",
+      "nguoi nhan",
+      "chu tk",
+      "chu tai khoan",
+      "nhan tien tu",
+      "xin chao",
+      "noi dung",
+      "ngay sinh",
+      "date of birth",
+      "sinh nhat",
+      "dia chi",
+      "que quan",
+      "thuong tru",
+      "noi o",
+      "place of",
+      "stk",
+      "so tai khoan",
+      "tai khoan",
+      "so du",
+      "so tien",
+      "phi giao dich",
+      "cccd",
+      "can cuoc",
+      "cmnd",
+      "no.",
+      "sdt",
+      "dien thoai",
+      "email",
+      "mail"
+    ]
+  },
+  "mask": {
+    "default_mode": "black_box",
+    "pad_px": 4,
+    "merge_min_v_overlap": 0.5,
+    "merge_max_h_gap": 0.8
+  },
+  "ocr": {
+    "lang": "vie+eng",
+    "psm": 3,
+    "target_width": 1440,
+    "normalize_background": {
+      "block": 8,
+      "median_window": 7
+    },
+    "reading_order": "gom theo hàng ngang: tâm dọc của từ nằm trong [y0, y1] của hàng hiện tại",
+    "tesseract_version": "tesseract v5.5.3.20260724",
+    "leptonica_version": "leptonica-1.87.0",
+    "tessdata": {
+      "vie": {
+        "source_path": "D:\\safescreen\\ml\\tessdata\\vie.traineddata",
+        "size_bytes": 12435550,
+        "sha256": "b6b49293d95d0b6dbd8780174627e82c75be957b6f4ed9862155540d6b00bb45",
+        "version_string": "4.00.00alpha:vie:synth20170629:[1,36,0,1Ct3,3,16Mp3,3Lfys64Lfx96Lrx96Lfx512O1c1]",
+        "lstm_size_bytes": 12337531,
+        "origin": "tessdata_best — https://github.com/tesseract-ocr/tessdata_best/raw/main/vie.traineddata (tải ngày 2026-10-14)"
+      },
+      "eng": {
+        "source_path": "D:\\safescreen\\ml\\tessdata\\eng.traineddata",
+        "size_bytes": 4113088,
+        "sha256": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2",
+        "version_string": "4.00.00alpha:eng:synth20170629",
+        "lstm_size_bytes": 401636,
+        "origin": "đi kèm bộ cài Tesseract (C:\\Program Files\\Tesseract-OCR\\tessdata), mạng LSTM nhỏ ~0,4 MB → nhiều khả năng là bản tessdata_fast"
+      }
+    }
+  }
+}

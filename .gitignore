@@ -1,0 +1,19 @@
+# ===== Python (ml/) =====
+# Môi trường ảo: tạo lại bằng  python -m venv .venv  +  pip install -r ml/requirements.txt
+ml/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+ml/.idea/
+
+# Dữ liệu tổng hợp (~480 MB): sinh lại được bằng synth.py + ocr.py với cùng seed
+ml/data/synth/
+ml/data/val/
+ml/data/test/
+# Bộ test ảnh thật: chỉ commit nhãn/hướng dẫn, ẢNH thì không (có thể chứa thông tin của người chụp)
+ml/data/real/images/
+ml/data/real/ocr/
+ml/data/real/preview/
+
+# ===== Android =====
+# (android/.gitignore đã bỏ qua build/, .gradle/, local.properties, .idea/)

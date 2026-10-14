@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Photo Picker (che thủ công) KHÔNG cần quyền đọc ảnh -->
+
+    <!-- Chỉ Android 8–9 (API ≤ 28) mới cần quyền này để lưu ảnh vào thư viện; Android 10+ không cần -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <!-- ===== Bảo vệ tự động ===== -->
+    <!-- Đọc ảnh chụp màn hình mới: Android 13+ dùng READ_MEDIA_IMAGES, cũ hơn dùng READ_EXTERNAL_STORAGE -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <!-- Android 14+: khai báo để biết người dùng chọn "Cho phép tất cả" hay chỉ "Chọn ảnh" -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+    <!-- Android 12+: "Quản lý phương tiện" — sửa ảnh của app khác không cần hỏi mỗi lần (người dùng bật trong Cài đặt) -->
+    <uses-permission android:name="android.permission.MANAGE_MEDIA" />
+    <!-- "Hiển thị trên ứng dụng khác": từ Android 15, service chạy nền chỉ mở được hộp thoại xoá của MediaStore
+         (để MANAGE_MEDIA tự đồng ý) khi app có quyền này. Không có → chỉ lưu được bản che riêng -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="false"
+        android:label="SafeScreen"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <!-- Màn hình mở đầu tiên khi bấm icon app (MAIN + LAUNCHER).
+             singleTop: bấm thông báo khi app đang mở → không tạo thêm màn hình mới -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Android 14+ bắt buộc khai loại foreground service. Không loại có sẵn nào khớp việc
+             "theo dõi ảnh chụp màn hình liên tục" → specialUse + giải thích lý do -->
+        <service
+            android:name=".auto.AutoProtectService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Theo dõi ảnh chụp màn hình mới để tự động che thông tin cá nhân trên ảnh" />
+        </service>
+
+        <!-- Bật lại bảo vệ sau khi khởi động máy / cập nhật app -->
+        <receiver
+            android:name=".auto.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
